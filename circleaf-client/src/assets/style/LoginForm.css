@@ -1,0 +1,12 @@
+.login-form{
+    & input{
+        display: block;
+        width: 50%;
+        height: 2rem;
+        margin: 2rem auto;
+    }
+
+    & button{
+        background-color: var(--color-theme);
+    }
+}

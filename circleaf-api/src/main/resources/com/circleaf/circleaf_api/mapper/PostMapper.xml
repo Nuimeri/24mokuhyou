@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circleaf.circleaf_api.mapper.PostMapper">
+    <select id="findAll" resultType="com.circleaf.circleaf_api.model.Post">
+        SELECT id, code, account_id, post_text, image, create_at, create_by, update_at, update_by
+        FROM post WHERE is_deleted = 0;
+    </select>
+    <select id="get" resultType="com.circleaf.circleaf_api.model.Post">
+        SELECT id, code, account_id, post_text, image, create_at, create_by, update_at, update_by 
+        FROM post WHERE code = #{code} AND is_deleted = 0;
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO post (code, account_id, post_text, image, create_at, create_by, update_at, update_by)
+        VALUES (uuid(), #{post.accountId}, #{post.postText}, #{post.image}, now(), #{post.createBy}, now(), #{post.updateBy});
+    </insert>
+    <update id="update">
+        UPDATE post
+        SET code = #{post.code}, account_id = #{post.accountId}, post_text = #{post.postText}, 
+            image = #{post.image}, update_at = now(), update_by = #{post.updateBy}
+        WHERE id = #{post.id} AND is_deleted = 0;
+    </update>
+    <delete id="delete">
+        DELETE FROM post WHERE id = #{id};
+    </delete>
+    <!-- 固定ポストのcodeを取得 -->
+    <select id="getAnchoredPost">
+        SELECT post_code FROM anchored_post WHERE account_id = #{accountId}
+    </select>
+    <!-- 最新ポストのcodeを取得 -->
+    <select id="getLatestPost">
+        SELECT code FROM post 
+            WHERE account_id = #{accountId} 
+                AND is_deleted = 0
+            ORDER BY id DESC
+            LIMIT 1
+    </select>
+</mapper>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.circleaf.circleaf_api.mapper.InvitationMapper">
+    <select id="getByTeamCode" resultType="com.circleaf.circleaf_api.model.Invitation">
+        SELECT id, code, team_id, sender, recipient, status, create_at, update_at, create_by, update_by 
+        FROM invitation WHERE team_id = #{team_id}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO invitation (team_id, code, sender, recipient,  status, create_at, update_at, create_by, update_by)
+        VALUES (#{invitation.teamId}, #{invitation.uuid}, #{invitation.sender}, #{invitation.recipient}, #{invitation.status}, now(), now(), #{invitation.createBy}, #{invitation.updateBy})    
+    </insert>
+    <select id="getByCode" resultType="com.circleaf.circleaf_api.model.Invitation">
+        <!-- 招待コードから招待情報を取得 -->
+        SELECT id, team_id, code, sender, recipient, status, create_at, update_at, create_by, update_by
+        FROM invitation
+        WHERE code = UUID_TO_BIN(#{code})
+    </select>
+    <update id="update">
+        <!-- 招待のstatusを更新する -->
+        UPDATE invitation
+        SET status = #{invitation.status}, update_at = now(), update_by = #{invitation.updateBy}
+        WHERE code = UUID_TO_BIN(#{invitation.code})
+    </update>
+    <select id="getSentInvitation" resultType="com.circleaf.circleaf_api.model.Invitation">
+        <!-- 送信した招待を取得する(未承認のみ) -->
+        SELECT id, BIN_TO_UUID(code) as code, team_id, sender, recipient, create_at
+        FROM invitation
+        WHERE sender = #{sender} AND status = 0
+    </select>
+    <select id="getReceivedInvitation" resultType="com.circleaf.circleaf_api.model.Invitation">
+        <!-- 受信した招待を取得する(未承認のみ) -->
+        SELECT id, BIN_TO_UUID(code) as code, team_id, sender, recipient, create_at
+        FROM invitation
+        WHERE recipient = #{recipient} AND status = 0
+    </select>
+</mapper>

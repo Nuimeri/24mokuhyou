@@ -1,0 +1,103 @@
+.profile-home{
+    padding: 2rem;
+
+    & .profile-icon{
+        width: 10rem;
+        height: 10rem;
+    }
+
+    & .nickname{
+        font-weight: bold;
+        font-size: 25px;
+    }
+
+    & .username{
+        font-size: 18px;
+    }
+
+    & edit-link{
+        background-color: rgba(125, 125, 125,1); /* 白色に透明度30% */;
+        color: white;
+        height: 100%;
+        justify-content: center;   /* 子要素を中央に配置 */
+        align-items: center;       /* 子要素を縦中央に配置 */
+        flex: 1; /* コンテンツ部分が足りない分の高さを埋める */
+        border-radius: 50%;
+        font-size: 18px;
+    }
+
+    & .description{
+        background-color: rgba(255, 255, 255, 0.3); /* 白色に透明度30% */
+        height: 5rem;
+        width: 30rem;
+        margin: 1rem;
+        padding: 0.5rem;
+        text-align: left;
+        word-wrap: break-word;
+    }
+
+    & .team-icon{
+        width: 6rem;
+        height: 6rem;
+    }
+
+    & .teams{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+
+        & .team-list{
+            display: flex;
+            justify-content: center;  /* 横方向に中央配置 */
+        }
+
+        & ul{
+            list-style: none;  /* リストのデフォルトのマーカーを削除 */
+            padding: 0;         /* パディングをリセット */
+            margin: 0;          /* マージンをリセット */
+            display: flex;
+            justify-content: center;  /* リスト項目を横並びに中央配置 */
+        }
+            
+        & li{
+            margin: 0 1rem;
+        }
+
+        & .description , & .team-code, & .category{
+            display: none;
+        }
+    }
+
+    & .birthday-date{
+        margin: 0 1rem;
+    }
+
+    & .posts-link{
+        margin-bottom: 0.5rem;
+        margin-right: 1rem;
+        text-align: right;
+    }
+
+    & .announce-post{
+        background-color: aliceblue;
+        width: 30rem;
+        height: fit-content();
+        padding: 1rem;
+        text-align: left;
+        margin-left: auto;
+        margin-right: auto;
+        margin-bottom: 1rem;
+
+        & .profile-icon{
+            display: none;
+        }
+
+        & .nickname{
+            display: none;
+        }
+
+        & .username{
+            display: none;
+        }
+
+    }
+}

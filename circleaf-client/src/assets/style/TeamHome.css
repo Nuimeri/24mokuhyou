@@ -1,0 +1,60 @@
+.team-home{
+    padding: 2rem;
+
+    & .team-icon{
+        width: 10rem;
+        height: 10rem;
+    }
+
+    & .team-name{
+        font-weight: bold;
+        font-size: 25px;
+    }
+
+    & .team-code{
+        font-size: 18px;
+    }
+
+    & .description{
+        background-color: rgba(255, 255, 255, 0.3); /* 白色に透明度30% */
+        height: 5rem;
+        width: 30rem;
+        margin: 1rem;
+        padding: 0.5rem;
+        text-align: left;
+        word-wrap: break-word;
+    }
+
+    & .create-date{
+        margin: 0 1rem;
+    }
+
+    
+    & .members{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        
+        & .member-list{
+            display: flex;
+            justify-content: center;  /* 横方向に中央配置 */
+        }
+        
+        & .profile-icon{
+            width: 6rem;
+            height: 6rem;
+        }
+        
+        & ul{
+            list-style: none;  /* リストのデフォルトのマーカーを削除 */
+            padding: 0;         /* パディングをリセット */
+            margin: 0;          /* マージンをリセット */
+            display: flex;
+            justify-content: center;  /* リスト項目を横並びに中央配置 */
+        }
+            
+        & li{
+            margin: 0 1rem;
+        }
+    }
+
+}

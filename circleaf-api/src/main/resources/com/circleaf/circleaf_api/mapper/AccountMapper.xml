@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circleaf.circleaf_api.mapper.AccountMapper">
+    <select id="findAll" resultType="com.circleaf.circleaf_api.model.Account" parameterType="String">
+        SELECT id, mail, password, birthday, create_at, create_by, update_at, update_by 
+        FROM account
+        WHERE is_deleted = 0
+    </select>
+    <select id="get" resultType="com.circleaf.circleaf_api.model.Account">
+        SELECT id, mail, password, birthday, create_at, create_by, update_at, update_by 
+        FROM account 
+        WHERE id = #{id} AND is_deleted = 0
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO account (mail, password, birthday, create_at, create_by, update_at, update_by) 
+        VALUES (#{account.mail}, #{account.password}, #{account.birthday}, now(), 1, now(), 1)
+    </insert>
+    <update id="update">
+        UPDATE account 
+        SET mail = #{account.mail}, update_at = #{account.updateAt}, update_by = #{account.updateBy} 
+        WHERE id = #{account.id} AND is_deleted = 0
+    </update>
+    <delete id="delete">
+        UPDATE account
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </delete>
+</mapper>

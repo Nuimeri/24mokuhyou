@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circleaf.circleaf_api.mapper.TeamMapper">
+    <select id="findAll" resultType="com.circleaf.circleaf_api.model.Team">
+        SELECT id, name, category, founder, leader, icon, music, description, create_at, create_by, update_at, update_by 
+        FROM team
+    </select>    
+    <select id="get" resultType="com.circleaf.circleaf_api.model.Team">
+        SELECT id, code, name, category, founder, leader, icon, music, description, create_at, create_by, update_at, update_by 
+        FROM team 
+        WHERE code = #{code} AND is_deleted = 0
+    </select>    
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO team (name, code, category, founder, leader, icon, music, description, create_at, create_by, update_at, update_by)
+        VALUES (#{team.name}, #{team.code}, #{team.category}, #{team.founder}, #{team.leader}, #{team.icon}, #{team.music}, #{team.description}, NOW(), #{team.createBy}, NOW(), #{team.updateBy})
+    </insert>
+    <update id="update">
+        UPDATE team
+        SET code = #{team.code}, name = #{team.name}, category = #{team.category}, founder = #{team.founder}, 
+            leader = #{team.leader}, icon = #{team.icon}, music = #{team.music}, description = #{team.description}, 
+            update_at = NOW(), update_by = #{team.updateBy}
+        WHERE id = #{team.id} AND is_deleted = 0
+    </update>    
+    <delete id="delete">
+        DELETE FROM team 
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </delete>
+    <!-- 限定取得API -->
+    <select id="getJoinTeams">
+        SELECT id, code, name, category, founder, leader, icon, music, description, create_at, create_by, update_at, update_by 
+        FROM team 
+        WHERE 
+            id in ( SELECT team_id FROM member WHERE account_id = #{id})
+        OR  leader = #{id}
+        AND is_deleted = 0
+    </select>
+    <!-- teamcodeからteam_idを取得する -->
+    <select id="getTeamIdByCode">
+        SELECT id
+        FROM team
+        WHERE code = #{code} AND is_deleted = 0
+    </select>
+    <!-- team_idからteamcodeを取得する -->
+    <select id="getTeamCodeById">
+        SELECT code
+        FROM team
+        WHERE id = #{id} AND is_deleted = 0
+    </select>
+</mapper>

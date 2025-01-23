@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.circleaf.circleaf_api.mapper.MemberMapper">
+    <select id="findAll" resultType="com.circleaf.circleaf_api.model.Member">
+        SELECT id, team_id, account_id, create_at, update_at, create_by, update_by
+        FROM member
+        WHERE is_deleted = 0
+    </select>
+    <select id="get" resultType="com.circleaf.circleaf_api.model.Member">
+        SELECT id, team_id, account_id, create_at, update_at, create_by, update_by
+        FROM member
+        WHERE id = #{id} AND is_deleted = 0
+    </select>
+    <insert id="insert"  useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO member (team_id, account_id, create_at, update_at, create_by, update_by)
+        VALUES (#{member.teamId}, #{member.accountId}, now(), now(),  #{member.createBy}, #{member.updateBy})
+    </insert>
+    <update id="update">
+        UPDATE member
+        SET team_id = #{member.teamId}, account_id = #{member.accountId}, update_at = now(), update_by = #{member.updateBy}
+        WHERE id = #{member.id} AND is_deleted = 0
+    </update>
+    <delete id="delete" parameterType="long">
+        DELETE FROM member 
+        SET is_deleted = 1
+        WHERE id = #{id}
+    </delete>
+
+    <!-- 限定取得API -->
+    <!-- getJoinMembers - 特定のチームに参加しているメンバーを取得 -->
+    <select id="getJoinMembers" resultType="com.circleaf.circleaf_api.model.Member">
+        SELECT id, team_id, account_id, create_at, update_at, create_by, update_by
+        FROM member
+        WHERE team_id = #{teamId} AND is_deleted = 0
+    </select>
+
+</mapper>

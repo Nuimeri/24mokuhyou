@@ -1,0 +1,76 @@
+.find-team{
+    width: 100%;
+    justify-content: start;
+    margin: 0;
+    flex: 1;
+}
+
+.find-result{
+    width: 100%;
+    flex-direction: column; /* 縦方向の配置 */
+
+    & ul{
+        padding: 0;
+    }
+
+    & .team-list{
+        display: block;
+    }
+    
+    & .team-row {
+        display: flex;                      /* Flexboxを使って横並びに */
+        align-items: center;                /* 垂直方向に中央揃え */
+        min-height: 6rem;                       /* 高さ6rem */
+        width: 100%;                        /* 幅100% */
+        padding: 0 1rem;                    /* 左右にスペース */
+        margin: 0;
+        box-sizing: border-box;             /* パディングを考慮したサイズ */
+        border: 1px solid rgb(207, 207, 207);
+    }
+
+    & .team-icon {
+        width: 5rem;                        /* アイコンのサイズ */
+        height: 5rem;                       /* アイコンの高さ */
+        border-radius: 50%;                  /* アイコンを丸くする */
+        margin-right: 1rem;                 /* アイコンとテキストの間にスペース */
+        justify-content: center;
+        align-items: center;
+    }
+
+    & .team-info{
+        flex-direction: column;
+        justify-content: start;
+        height: 100%;
+        width: 100%;
+        display: flex;
+        
+        & .team-names{
+            display: flex;
+            
+            & span{
+                width: fit-content;
+                margin: 0;
+                padding: 0;
+            }
+            
+            & .name{
+                width: 12rem;
+                text-align: left;
+            }
+
+            & .category{
+                margin-left: 2rem;
+            }
+        }
+        
+        & .description {
+            width: calc(100% - 6rem);
+            flex-grow: 1;
+            padding: 0.5rem;
+            padding-top: 0;
+            padding-left: 0;
+            text-align: left;
+            overflow-wrap: break-word;
+        }
+    }
+}

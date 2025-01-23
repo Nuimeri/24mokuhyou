@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.circleaf.circleaf_api.mapper.ProfileMapper">
+    <select id="findAll" resultType="com.circleaf.circleaf_api.model.Profile">
+        SELECT id, nickname, username, icon, description, birthday, create_at, update_at, create_by, update_by FROM profile
+    </select>
+    <select id="get" resultType="com.circleaf.circleaf_api.model.Profile">
+        SELECT id, nickname, username, icon, description, birthday, create_at, update_at, create_by, update_by 
+        FROM profile WHERE username = #{username}
+    </select>
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO profile (nickname, username, icon, description, birthday, create_at, update_at, create_by, update_by, account_id)
+        <!-- VALUES (#{profile.nickname}, #{profile.username}, #{profile.icon}, #{profile.description}, now(), now(), #{profile.createBy}, #{profile.updateBy}) -->
+        <!-- signup時にUUIDのnickname,usernameで作成 -->
+        VALUES (UUID(),UUID(), #{profile.icon}, #{profile.description}, now(), now(), #{profile.createBy}, #{profile.updateBy}, #{profile.accountId})
+    </insert>
+    <update id="update">
+        UPDATE profile
+        SET nickname = #{profile.nickname}, username = #{profile.username}, icon = #{profile.icon}, 
+            description = #{profile.description}, birthday=#{profile.birthday}, update_at = now(), update_by = #{profile.updateBy}
+        WHERE id = #{profile.id}
+    </update>
+    <delete id="delete">
+        DELETE FROM profile WHERE id = #{id}
+    </delete>
+
+    <!-- AccountとProfileの紐付け -->
+    <select id="getRefAccount" resultType="com.circleaf.circleaf_api.model.Profile">
+        SELECT id, username, nickname FROM profile WHERE account_id = #{accountId}
+    </select>
+
+    <!-- AccountId取得 -->
+    <select id="getAccount">
+        SELECT account_id FROM profile WHERE username = #{username}
+    </select>
+
+    <!-- signupでの仮プロフィール作成 -->
+    <insert id="signup" useGeneratedKeys="true" keyProperty="profile.id">
+        INSERT INTO profile (nickname, username, icon, description, birthday, create_at, update_at, create_by, update_by, account_id)
+        <!-- signup時にUUIDのnickname,usernameで作成 -->
+        VALUES (UUID(), UUID(), ' ', ' ', null, now(), now(), #{accountId}, #{accountId}, #{accountId})
+    </insert>
+</mapper>

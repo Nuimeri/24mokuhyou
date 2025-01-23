@@ -1,0 +1,15 @@
+.site-logo{
+    height: 90%;
+    aspect-ratio: 1/1;
+    border-radius: 50%;
+    background-color: rgba(240,240,240,90);
+    align-items: center;
+    justify-content: center;
+    display: flex;
+
+    & img{
+        height: 90%;
+        width: 90%;
+        object-fit: cover;
+    }
+}
